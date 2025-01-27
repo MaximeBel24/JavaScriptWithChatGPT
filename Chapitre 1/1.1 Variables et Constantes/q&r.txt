@@ -1,0 +1,15 @@
+Questions pour vérifier vos connaissances
+
+1. Quelle est la différence entre var et let en termes de portée ?
+
+q1. var ignore les blocs elle a donc une portée global même si elle est déclarée dans un if ou dans une boucle for ce qui peut entariné des comporetement inattendu.
+let sont visible uniquement dans le bloc ou elles sont défini 
+
+2. Que se passe-t-il si vous essayez de réaffecter une constante déclarée avec const ?
+
+Cela retournera une erreur car la valeur d'une const de peut être modifié
+
+3. Pourquoi est-il préférable d'utiliser const par défaut dans votre code ?
+
+const est préférable car cela evite que la valeur soit accidentellement modifié 
+il faut utiliser let uniquement si la valeur de la variable doit changer
