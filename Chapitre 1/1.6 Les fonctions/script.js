@@ -86,29 +86,104 @@
 // Si le minuteur atteint 0, il affiche "🚀 Minuteur terminé !".
 // Empêcher les saisies invalides (NaN, nombres négatifs, etc.).
 
-let duree = parseInt(prompt("Combien de secondes doit durer le compte à rebours ?"));
+// let duree = parseInt(prompt("Combien de secondes doit durer le compte à rebours ?"));
 
-if(isNaN(duree) || duree <= 0){
-    console.log("❌ Veuillez entrer un nombre valide !");
+// if(isNaN(duree) || duree <= 0){
+//     console.log("❌ Veuillez entrer un nombre valide !");
+// } else {
+//     console.log(`⏳ Temps restant : ${duree} secondes`);
+
+//     let countdown = setInterval(() => {
+
+//         console.log(`⏳ Temps restant : ${--duree} secondes`);
+
+//         if(duree === 0) {
+//             clearInterval(countdown);
+//             console.log("🚀 Compte à rebours terminé !");
+//         }
+//     }, 1000);
+
+//     document.addEventListener("keydown", function(event) {
+//         if (event.key === "s") {
+//             console.log("🛑 Compte à rebours arrêté par l'utilisateur !");
+//             clearInterval(countdown);
+//         }
+//     });
+// }
+
+
+// 🔥 DÉFI INSANE : Minuteur interactif avec PAUSE, REPRISE et STOP en temps réel 🔥
+// 🎯 Objectif :
+// Tu vas coder un minuteur avancé qui démarre, peut être mis en pause, repris, et arrêté à tout moment avec les touches du clavier p (pause), r (reprise), et s (stop).
+// 💡 L'affichage doit s'adapter dynamiquement selon l'action de l'utilisateur !
+
+// 🔹 Fonctionnalités à implémenter :
+// ✅ Démarrage automatique après que l'utilisateur ait saisi la durée.
+// ✅ Affichage du temps restant à chaque seconde.
+// ✅ Mettre en pause avec la touche p (le temps ne diminue plus).
+// ✅ Reprendre avec la touche r (le temps recommence à descendre).
+// ✅ Arrêter complètement avec la touche s (le minuteur s'arrête définitivement).
+// ✅ Empêcher les saisies invalides (NaN, nombres négatifs, etc.).
+
+let duration = parseInt(prompt("Quelle durée souhaitez-vous pour votre minuteur ?"));
+
+if (isNaN(duration) || duration <= 0) {
+    console.log("❌ Veuillez entrer un nombre valide et supérieur à zéro");
 } else {
-    console.log(`⏳ Temps restant : ${duree} secondes`);
+    let timer;
+    let enPause = false;
+    let initialDuration = duration;
+    let statut = "⏳ Minuteur en cours...";
 
-    let countdown = setInterval(() => {
+    console.log(`⏳ Minuteur démarré pour ${duration} secondes.`);
+    console.log("Tapez 'p' pour mettre en pause.");
+    console.log("Tapez 'r' pour reprendre.");
+    console.log("Tapez 's' pour arrêter complètement.");
+    console.log("Tapez 'z' pour remettre à zéro.");
+    console.log(`📢 Statut : ${statut}`);
 
-        console.log(`⏳ Temps restant : ${--duree} secondes`);
+    function startTimer() {
+        timer = setInterval(() => {
+            if (!enPause) {
+                console.log(`⏳ Temps restant : ${--duration} secondes`);
+                if (duration === 0) {
+                    clearInterval(timer);
+                    statut = "🚀 Fin du minuteur !";
+                    console.log(`📢 Statut : ${statut}`);
+                }
+            }
+        }, 1000);
+    }
 
-        if(duree === 0) {
-            clearInterval(countdown);
-            console.log("🚀 Compte à rebours terminé !");
-        }
-    }, 1000);
+    startTimer();
 
     document.addEventListener("keydown", function(event) {
         if (event.key === "s") {
-            console.log("🛑 Compte à rebours arrêté par l'utilisateur !");
-            clearInterval(countdown);
+            console.log("🛑 Minuteur arrêté !");
+            clearInterval(timer);
+            duration = 0;
+            statut = "🛑 Arrêté.";
+            console.log(`📢 Statut : ${statut}`);
+        }
+        if (event.key === "z") {
+            clearInterval(timer);
+            duration = initialDuration;
+            console.log("🔄 Minuteur remis à zéro.");
+            statut = "🔄 Remis à zéro et redémarré.";
+            console.log(`📢 Statut : ${statut}`);
+            startTimer();
+        }
+        if (event.key === "p" && !enPause) {
+            enPause = true;
+            console.log("⏸ Minuteur en pause. Tapez 'r' pour reprendre.");
+            statut = "⏸ En pause.";
+            console.log(`📢 Statut : ${statut}`);
+        }
+        if (event.key === "r" && enPause) {
+            enPause = false;
+            console.log("▶ Minuteur repris.");
+            statut = "▶ En cours...";
+            console.log(`📢 Statut : ${statut}`);
         }
     });
 }
-
-
